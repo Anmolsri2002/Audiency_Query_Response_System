@@ -55,7 +55,5 @@ The system auto-tags each query, assigns priority, maintains full conversation h
 - MongoDB with Mongoose  
 - Socket.io for real-time communication  
 
----
 
-## 📁 Folder Structure
 
