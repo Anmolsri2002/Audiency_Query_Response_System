@@ -1,0 +1,15 @@
+/* src/styles/email.css */
+.email-detail { max-width:900px; background:#fff; padding:18px; border-radius:8px; border:1px solid #e6e9ee; }
+.email-detail .meta { display:flex; gap:18px; color:#6b7280; margin-top:6px; margin-bottom:12px; }
+.message-block { background:#f9fafb; padding:12px; border-radius:6px; color:#111827; margin-top:12px; }
+.conversation { margin-top:18px; }
+.reply { background:#fff; border:1px solid #e6e9ee; padding:10px; border-radius:6px; }
+.reply-meta { color:#6b7280; font-size:12px; margin-bottom:6px; }
+.reply-box { margin-top:12px; }
+.reply-box textarea { width:100%; min-height:100px; border:1px solid #e6e9ee; padding:10px; border-radius:6px; }
+.reply-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:8px; }
+.btn { padding:8px 12px; border-radius:6px; border:1px solid #e6e9ee; background:#fff; cursor:pointer; }
+.btn.primary { background:#1d4ed8; color:#fff; border:1px solid #1d4ed8; }
+.loader { padding:24px; text-align:center; color:#6b7280; }
+.emptystate { padding:36px; text-align:center; color:#6b7280; }
+.empty-illustration { font-size:40px; margin-bottom:10px; }
