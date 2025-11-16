@@ -7,32 +7,50 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
 
-app.use(cors());
+const FRONTEND_URL = process.env.FRONTEND_URL || "*";
+
+const io = new Server(server, { 
+  cors: { 
+    origin: FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+  } 
+});
+
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
-// Connect to Mongo
-const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/audience_query_db';
+// Connect to MongoDB
+const uri = process.env.MONGO_URI;
 mongoose.connect(uri)
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log("MongoDB connected"))
   .catch(err => console.error(err));
 
 // Routes
 app.use('/queries', require('./routes/queryRoutes'));
 app.use('/users', require('./routes/userRoutes'));
 
-// Simple health
-app.get('/', (req, res) => res.send({ ok: true }));
+// Health route
+app.get('/', (req, res) => res.json({ status: 'Server is running on Render!' }));
 
-// Socket.io for realtime updates (emit events when queries change)
-io.on('connection', (socket) => {
-  console.log('Client connected:', socket.id);
-  socket.on('disconnect', () => console.log('Client disconnected:', socket.id));
+// Socket.io
+io.on("connection", (socket) => {
+  console.log("Client connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
 });
 
-// Make io available to controllers via app.locals
+// Share io for controllers to emit notifications
 app.locals.io = io;
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log('Server running on', PORT));
+server.listen(PORT, () => console.log("Server running on port", PORT));
